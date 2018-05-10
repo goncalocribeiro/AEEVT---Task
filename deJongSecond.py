@@ -2,7 +2,7 @@
 #AEEVT - Second DeJong Function (Rosenbrock valley)
 
 """
-Rosenbrock’s valley is a classic optimization problem
+Rosenbrocks valley is a classic optimization problem
 also known as banana function or the second function of De Jong. 
 The global optimum lays inside a long, narrow, parabolic shaped flat valley. 
 To find the valley is trivial, however convergence to the global optimum 

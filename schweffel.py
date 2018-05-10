@@ -2,8 +2,8 @@
 #AEEVT - Schweffel Function
 
 """
-Schwefel’s function is deceptive in that the global minimum 
-is geometrically di- stant, over the parameter space, from the next best local minima. 
+Schwefels function is deceptive in that the global minimum 
+is geometrically distant, over the parameter space, from the next best local minima. 
 Therefore, the search algorithms are potentially prone to convergence in the wrong direction.
 """
 

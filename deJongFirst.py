@@ -2,7 +2,7 @@
 #AEEVT - First DeJong Function
 
 """
-The simplest test function is De Jong's function 1. 
+The simplest test function is De Jongs function 1. 
 It is also known as sphere model. It is continuos, convex and unimodal
 """
 
