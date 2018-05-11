@@ -13,7 +13,6 @@ performance of optimization algorithms. Function has the following definition
 def deJongSecond(x):
 	n = len(x)
 	sum = 0
-	for i in range(1,n-1):
-		xi = xx[i]
-		sum = sum + 100 * (x[i]^2 - x[i+1])^2 + (x[i]-1)^2
+	for i in range(0,n-1):
+		sum = sum + 100 * (x[i]**2 - x[i+1])**2 + (x[i]-1)**2
 	return sum
