@@ -10,7 +10,10 @@ despite the fact that no new generations of individuals are created during the s
 import random
 import Chrom
 import FunctionSelect
+import SOMA_nextStep
+import InitArray
 
+bestChrom = 1
 def soma(func):
 	if (func==1) or (func==2): #DeJong1 or DeJong2
 		bounds = 5
@@ -29,34 +32,52 @@ def soma(func):
 	maxIter = 46 #maximum iteration
 	#Max. FES 10 036
 
-	pop = InitArray(popSize)
-	bestChrom = 1
-	solution = [i for i in range(1,popSize+1)] #Initialize array with values from 1 to 25
+	pop = InitArray.initArray(popSize)
+	global bestChrom
+	solution = [i for i in range(1,popSize+1)] #Initialize array with values from 1 to 46
 
 	#Initialize first population
-	for i in range(1,popSize):
+	for i in range(0,popSize):
 		x = random.uniform(0,1) * scale - bounds
 		y = random.uniform(0,1) * scale - bounds
-		nextChrom = Chrom(x,y)
+		nextChrom = Chrom.Chrom(x,y,0)
 		pop[i] = nextChrom
 
 	#Test of initial best
-	for j in range(1,popSize):
-		pop[j].setCost(functionSelect(func, pop[j].coord))
+	for j in range(0,popSize):
+		pop[j].setCost(FunctionSelect.functionSelect(func, pop[j].coord))
 
-		if (pop[j].cost < pop[bestChrom].cost):
+		if (pop[j].getCost() < pop[bestChrom].getCost()):
 			bestChrom = j
 			bestStep = pop[j].coord
 
 	#Run SOMA
 	for k in range(1,maxIter):
-		for w in range(1,popSize):
-			if (w != bestChrom):
+		for w in range(0,popSize):
+			if (w != bestChrom): #is not the leader
 				journeyLength = 0
 				#The Journey of individual Chrom
+				bestStep = pop[w].coord
 				while (journeyLength < pathLength):
 					#next step
-					pop[w].coord = SOMA_nextStep(pop[w].coord, pop[bestChrom].coord, stepLength)
+					pop[w].coord = SOMA_nextStep.SOMA_nextStep(pop[w].coord, pop[bestChrom].coord, stepLength)
+					stepCost = FunctionSelect.functionSelect(func, pop[w].coord)
 
+					#check for best step of the individual
+					if (stepCost <= pop[w].getCost()):
+						pop[w].setCost(stepCost)
+						bestStep = pop[w].coord
+					journeyLength += stepLength
+				#Set individual new best position (from the steps given)
+				pop[w].coord = bestStep
 
-	return
+		#check new best
+		for u in range(0, popSize):
+			if (pop[u].getCost() < pop[bestChrom].getCost()):
+				bestChrom = u
+		#add cost of best chromosome to the solution vector
+	
+	#Create solution vector
+	for s in range(0,popSize):
+		solution[s] = pop[s].getCost()
+	return solution

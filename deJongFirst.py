@@ -11,5 +11,5 @@ def deJongFirst(x):
 	sum = 0
 	for i in range(1,d):
 		xi = x[i]
-		sum = sum + xi**2
+		sum += xi**2
 	return sum

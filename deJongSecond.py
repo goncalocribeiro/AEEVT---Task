@@ -14,5 +14,5 @@ def deJongSecond(x):
 	n = len(x)
 	sum = 0
 	for i in range(0,n-1):
-		sum = sum + 100 * (x[i]**2 - x[i+1])**2 + (x[i]-1)**2
+		sum += 100 * (x[i]**2 - x[i+1])**2 + (x[i]-1)**2
 	return sum

@@ -2,8 +2,8 @@
 #AEEVT - InitArray
 import Chrom
 
-def InitArray(arraySize):
-	array = [Chrom(0,0)]
+def initArray(arraySize):
+	array = [Chrom.Chrom(0,0,0)]
 	for i in range(1,arraySize):
-		array.append(Chrom(0,0))
+		array.append(Chrom.Chrom(0,0,0))
 	return array

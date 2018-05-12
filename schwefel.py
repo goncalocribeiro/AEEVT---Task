@@ -1,5 +1,5 @@
 #GONCALO RIBEIRO - goncalocribeiro@tecnico.ulisboa.pt
-#AEEVT - Schweffel Function
+#AEEVT - Schwefel Function
 
 """
 Schwefels function is deceptive in that the global minimum 
@@ -10,6 +10,9 @@ import math
 
 def schwefel(x):
 	n = len(x)
-	for i in range(0,n):
-		x[i] = 418.9829*n + (-x[i]) * math.sin( math.sqrt( abs( x[i] )))
-	return x
+	s = 0
+	cost = 0
+	for i in range(0,n-1):
+		s += (-x[i]) * math.sin( math.sqrt( abs( x[i] )))
+	cost = 418.9829*n + s
+	return cost
