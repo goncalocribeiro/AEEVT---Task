@@ -49,6 +49,14 @@ def soma(func):
 			bestStep = pop[j].coord
 
 	#Run SOMA
-	
+	for k in range(1,maxIter):
+		for w in range(1,popSize):
+			if (w != bestChrom):
+				journeyLength = 0
+				#The Journey of individual Chrom
+				while (journeyLength < pathLength):
+					#next step
+					pop[w].coord = SOMA_nextStep(pop[w].coord, pop[bestChrom].coord, stepLength)
+
 
 	return
