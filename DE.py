@@ -19,7 +19,7 @@ def de(func):
 
 	#Algorithm parameters
 	factor = 0.9 #mutation factor
-	cRate = 0.5 #crossover rate (!!! not used in code, don't change, see line 80)
+	cRate = 0.5 #crossover rate
 	popSize = 50 #size of population
 	maxIter = 2000 #maximum number of iterations
 	#Max. FES 10 000
@@ -76,3 +76,43 @@ def de(func):
 				noisyVx = diffV.coord.getX() + r1Chrom.coord.getX()
 				noisyVy = diffV.coord.getY() + r1Chrom.coord.getY()
 				noisyV = Chrom.Chrom(noisyVx, noisyVy)
+
+				"""Crossover
+				Due to crossover value of 0.5, trial chromosome
+				gets another coordinate from noisy vector and
+				another from active chromosome."""
+				active = rList[3] #generated randomly
+				activeChrom = currentPop[active]
+				trialChrom = Chrom.Chrom(activeChrom.coord.getX(), noisyV.coord.getY())
+
+				#Test if trialChrom is between the bounds
+				if (trialChrom.coord.getX() > bounds):
+					trialChrom.coord.setX(bounds)
+				elif (trialChrom.coord.getX() < -bounds):
+					trialChrom.coord.setX(-bounds)
+				elif (trialChrom.coord.getY() > bounds):
+					trialChrom.coord.setY(bounds)
+				elif (trialChrom.coord.getY() < -bounds):
+					trialChrom.coord.setY(-bounds)
+
+				#Set cost of trial chromosome
+				trialChrom.setCost(FunctionSelect.functionSelect(func, trialChrom.coord))
+
+				#Set trial chromosome to next generation
+				nextPop[w] = trialChrom
+			else:
+				#Insert previous best chromosome to next generation
+				nextPop[w] = currentPop[bestChrom]
+				bestChrom = w
+
+		#Set next generation to be current population
+		for w in range(0, popSize):
+			currentPop[w] = nextPop[w]
+
+		#Check a new best chromosome
+		for w in range(0, popSize):
+			if (currentPop[w].getCost() < currentPop[bestChrom].getCost()):
+				bestChrom = w
+
+		solution[k] = currentPop[bestChrom].getCost()
+	return solution
