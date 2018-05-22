@@ -6,6 +6,7 @@ import random
 import Chrom
 import FunctionSelect
 
+bestChrom = 1
 def de(func):
 	if (func==1) or (func==2): #DeJong1 or DeJong2
 		bounds = 5
@@ -25,8 +26,8 @@ def de(func):
 	#Max. FES 10 000
 
 	solution = [i for i in range(1,maxIter+1)]
-	currentPop = InitArray.initArray(popSize);
-	bestChrom = 1;
+	currentPop = InitArray.initArray(popSize)
+	global bestChrom
 
 	#Initializing first population
 	for i in range(0,popSize):
