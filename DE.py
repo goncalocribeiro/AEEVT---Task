@@ -38,13 +38,14 @@ def de(func):
 
 	#Test of initial best
 	for j in range(0,popSize):
-		pop[j].setCost(FunctionSelect.functionSelect(func, pop[j].coord))
+		currentPop[j].setCost(FunctionSelect.functionSelect(func, currentPop[j].coord))
 
-		if (pop[j].getCost() < pop[bestChrom].getCost()):
+		if (currentPop[j].getCost() < currentPop[bestChrom].getCost()):
 			bestChrom = j
 
 	#Run DE
 	for k in range(1,maxIter):
+		#print(k)
 		#Next generation creation
 		nextPop = InitArray.initArray(popSize)
 		for w in range(0,popSize):
@@ -53,8 +54,11 @@ def de(func):
 				#r1 = best
 				#r2 = random
 				#r3 = random
-				rList = [[rel] for rel in range(popSize)]
+				rList = [rEl for rEl in range(popSize)]
 				random.shuffle(rList)
+
+				#print("RANDOM LIST")
+				#print(rList)
 
 				if(w == rList[w]):
 					del(rList[w]) #remove element from list
@@ -71,12 +75,12 @@ def de(func):
 				diffVy = r2Chrom.coord.getY() - r3Chrom.coord.getY()
 				wDiffVx = diffVx * factor
 				wDiffVy = diffVy * factor
-				diffV = Chrom.Chrom(wDiffVx, wDiffVy);
+				diffV = Chrom.Chrom(wDiffVx, wDiffVy, 0);
 
 				#Noisy vector creation
 				noisyVx = diffV.coord.getX() + r1Chrom.coord.getX()
 				noisyVy = diffV.coord.getY() + r1Chrom.coord.getY()
-				noisyV = Chrom.Chrom(noisyVx, noisyVy)
+				noisyV = Chrom.Chrom(noisyVx, noisyVy, 0)
 
 				"""Crossover
 				Due to crossover value of 0.5, trial chromosome
@@ -84,7 +88,7 @@ def de(func):
 				another from active chromosome."""
 				active = rList[3] #generated randomly
 				activeChrom = currentPop[active]
-				trialChrom = Chrom.Chrom(activeChrom.coord.getX(), noisyV.coord.getY())
+				trialChrom = Chrom.Chrom(activeChrom.coord.getX(), noisyV.coord.getY(), 0)
 
 				#Test if trialChrom is between the bounds
 				if (trialChrom.coord.getX() > bounds):
